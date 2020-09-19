@@ -1,0 +1,29 @@
+From 0745090bb60982ac2c332bd8ded3c53adf339f45 Mon Sep 17 00:00:00 2001
+From: hht8 <huanghaitao12138@163.com>
+Date: Sat, 19 Sep 2020 17:52:58 +0800
+Subject: [PATCH] Disable no support local erlang version test
+
+https://github.com/elixir-lang/elixir/issues/9173
+disable this test to compat local erlang version.
+---
+ lib/mix/test/mix/tasks/release_test.exs | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/lib/mix/test/mix/tasks/release_test.exs b/lib/mix/test/mix/tasks/release_test.exs
+index 834ae77..6fb3d84 100644
+--- a/lib/mix/test/mix/tasks/release_test.exs
++++ b/lib/mix/test/mix/tasks/release_test.exs
+@@ -307,10 +307,6 @@ defmodule Mix.Tasks.ReleaseTest do
+         assert String.trim_trailing(version) == "eval 0.1.0"
+         refute File.exists?(Path.join(root, "RELEASE_BOOTED"))
+ 
+-        {hello_world, 0} = System.cmd(script, ["eval", "IO.puts :hello_world"])
+-        assert String.trim_trailing(hello_world) == "hello_world"
+-        refute File.exists?(Path.join(root, "RELEASE_BOOTED"))
+-
+         open_port(script, ['eval', 'Application.ensure_all_started(:release_test)'])
+ 
+         assert %{
+-- 
+2.23.0
+
